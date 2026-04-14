@@ -9,7 +9,15 @@
 </p>
 
 <p align="center">
-  Protection mod for Among Us lobbies
+  Lobby protection mod for <b>Among Us</b><br>
+  Designed for host control, anti-exploit protection, and improved game stability
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/C%23-100%25-239120?style=for-the-badge&logo=csharp&logoColor=white" alt="C#">
+  <img src="https://img.shields.io/badge/Unity-IL2CPP-black?style=for-the-badge&logo=unity&logoColor=white" alt="Unity IL2CPP">
+  <img src="https://img.shields.io/badge/BepInEx-6.0-blue?style=for-the-badge" alt="BepInEx">
+  <img src="https://img.shields.io/badge/Status-In_Development-orange?style=for-the-badge" alt="Status">
 </p>
 
 <p align="center">
@@ -19,33 +27,35 @@
 </p>
 
 <p align="center">
-  Russian version: <a href="README.md">README.md</a>
+  <sub>🇷🇺 Russian version: <a href="README.md">README.md</a></sub>
 </p>
 
 ---
 
-## About
+---
 
-**SentinelAU** is a mod for **Among Us**, created for lobby protection, host control, and improved game stability.
+## 🛡️ About
 
-## Current Features
+**SentinelAU** is a mod for **Among Us** designed to improve lobby protection, host control, and overall game stability.
+
+## ⚙️ Current Features
 
 - protection against current exploits
-- a protection system that drops cheater attacks outside the host, currently not yet fully complete
-- auto-host function through the mod menu
-- viewing and editing the banlist and whitelist through the mod menu
+- a protection system that drops cheater attacks outside the host, currently not yet fully implemented
+- auto-host functionality through the mod menu
+- banlist and whitelist viewing and editing through the mod menu
 - nickname-based banning
 - color locking by friend code through a file
-- a licensing system: after installing the mod, an activation key is required, otherwise the anti-cheat will not work
+- a licensing system requiring an activation key after installation, without which the anti-cheat will not function
 - custom design and visual style
 - and much more
 
-## Plans
+## 🚀 Plans
 
 Further expansion and development of the mod's functionality is planned.
 
 **Estimated release window:** Summer-Autumn 2026.
 
-## News and Community
+## 📢 News and Community
 
 **Telegram:** [@Sentinel_AU](https://t.me/Sentinel_AU)
