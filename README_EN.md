@@ -32,7 +32,15 @@
 
 ---
 
----
+## 📌 Project Status
+
+SentinelAU is currently in active development.
+
+Current priorities:
+- expanding protection systems
+- improving host tools
+- refining the interface
+- preparing for the first public release
 
 ## 🛡️ About
 
@@ -56,6 +64,26 @@ Further expansion and development of the mod's functionality is planned.
 
 **Estimated release window:** Summer-Autumn 2026.
 
-## 📢 News and Community
+## ℹ️ About This Repository
 
-**Telegram:** [@Sentinel_AU](https://t.me/Sentinel_AU)
+This GitHub repository serves as the official public page for **SentinelAU**.
+
+It contains general information about the mod, its current features, visual materials, development status, and other public project-related information.
+
+The full source code is not published and is not planned to be made public.
+
+<h2 align="center">📢 Project News</h2>
+
+<p align="center">
+  Telegram is the official platform for <b>SentinelAU</b>, where news, announcements, updates, and other project-related materials are published.
+</p>
+
+<p align="center">
+  <b>The future release of SentinelAU will also be published through the Telegram channel.</b>
+</p>
+
+<p align="center">
+  <a href="https://t.me/Sentinel_AU">
+    <img src="https://img.shields.io/badge/Telegram-Sentinel__AU-2AABEE?style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram">
+  </a>
+</p>
