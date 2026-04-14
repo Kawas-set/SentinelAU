@@ -87,3 +87,9 @@ The full source code is not published and is not planned to be made public.
     <img src="https://img.shields.io/badge/Telegram-Sentinel__AU-2AABEE?style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram">
   </a>
 </p>
+
+---
+
+## Disclaimer
+
+This mod is not affiliated with Among Us or Innersloth LLC, and the content contained therein is not endorsed or otherwise sponsored by Innersloth LLC. Portions of the materials contained herein are property of Innersloth LLC. © Innersloth LLC.
