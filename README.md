@@ -18,7 +18,9 @@
   </a>
 </p>
 
-English version: [README_EN.md](README_EN.md)
+<p align="center">
+  English version: <a href="README_EN.md">README_EN.md</a>
+</p>
 
 ---
 
