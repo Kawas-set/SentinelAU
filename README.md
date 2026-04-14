@@ -9,7 +9,15 @@
 </p>
 
 <p align="center">
-  Мод для защиты лобби Among Us
+  Мод для защиты лобби <b>Among Us</b><br>
+  Создан для контроля хоста, защиты от актуальных угроз и повышения стабильности игры
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/C%23-100%25-239120?style=for-the-badge&logo=csharp&logoColor=white" alt="C#">
+  <img src="https://img.shields.io/badge/Unity-IL2CPP-black?style=for-the-badge&logo=unity&logoColor=white" alt="Unity IL2CPP">
+  <img src="https://img.shields.io/badge/BepInEx-6.0-blue?style=for-the-badge" alt="BepInEx">
+  <img src="https://img.shields.io/badge/Статус-В_разработке-orange?style=for-the-badge" alt="Статус">
 </p>
 
 <p align="center">
@@ -19,8 +27,10 @@
 </p>
 
 <p align="center">
-  English version: <a href="README_EN.md">README_EN.md</a>
+  <sub>🇬🇧 English version: <a href="README_EN.md">README_EN.md</a></sub>
 </p>
+
+---
 
 ---
 
