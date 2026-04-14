@@ -18,6 +18,8 @@
   </a>
 </p>
 
+English version: [README_EN.md](README_EN.md)
+
 ---
 
 **SentinelAU** — мод для **Among Us**, созданный для защиты лобби, удобного управления и более стабильной игры.
