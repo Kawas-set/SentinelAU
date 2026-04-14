@@ -8,10 +8,6 @@
   <b>Control. Protection. Stability.</b>
 </p>
 
-<p align="center">
-  Lobby protection mod for <b>Among Us</b><br>
-  Designed for host control, anti-exploit protection, and improved game stability
-</p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/C%23-100%25-239120?style=for-the-badge&logo=csharp&logoColor=white" alt="C#">
@@ -29,6 +25,10 @@
 <p align="center">
   <sub>🇷🇺 Russian version: <a href="README.md">README.md</a></sub>
 </p>
+
+---
+
+<p align="center"><b>🔰 SentinelAU</b> — an anti-cheat mod for <b>Among Us</b>, designed to protect lobbies, expand host capabilities, and provide a more convenient and stable gameplay experience.</p>
 
 ---
 
