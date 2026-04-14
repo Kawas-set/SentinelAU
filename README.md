@@ -95,6 +95,13 @@ SentinelAU разрабатывается с упором на:
 
 ---
 
-## Disclaimer
+## ⚠️ Disclaimer
 
-This mod is not affiliated with Among Us or Innersloth LLC, and the content contained therein is not endorsed or otherwise sponsored by Innersloth LLC. Portions of the materials contained herein are property of Innersloth LLC. © Innersloth LLC.
+> This mod is not affiliated with Among Us or Innersloth LLC, and the content contained therein is not endorsed or otherwise sponsored by Innersloth LLC. Portions of the materials contained herein are property of Innersloth LLC. © Innersloth LLC.
+
+## 🚨 Important
+
+> ⚠️ SentinelAU is a fan-made mod for Among Us.  
+> ⚠️ It is not official, licensed, or endorsed by Innersloth LLC.  
+> ⚠️ A legitimate copy of Among Us is required.  
+> ⚠️ This repository and its releases do not include the base game files.
