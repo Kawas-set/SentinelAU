@@ -6,68 +6,96 @@
   <title>SentinelAU by Kawasaki</title>
   <meta
     name="description"
-    content="SentinelAU is an anti-cheat mod for Among Us, developed to protect lobbies, expand host capabilities, and provide a more convenient and stable gameplay experience."
+    content="SentinelAU is an anti-cheat mod for Among Us, designed to protect lobbies, expand host tools, and create a more convenient and stable gameplay experience."
   />
+  <meta name="theme-color" content="#0b0b0d" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #080808;
-      --bg-soft: #101010;
-      --card: rgba(20, 20, 20, 0.9);
-      --card-border: rgba(255, 196, 64, 0.16);
-      --text: #f6f2e8;
-      --muted: #c9bea5;
+      --surface: rgba(18, 18, 24, 0.82);
+      --text: #f6f4ee;
+      --muted: #b8ae95;
       --gold: #ffcb4d;
-      --gold-strong: #ffb300;
-      --gold-soft: #ffd76d;
-      --line: rgba(255, 196, 64, 0.12);
-      --shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
-      --radius: 24px;
-      --max: 1180px;
+      --gold-2: #ffb300;
+      --gold-3: #ffe08b;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+      --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.28);
+      --radius-xl: 30px;
+      --radius-lg: 24px;
+      --max: 1220px;
+      --header-h: 82px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: "Inter", Arial, Helvetica, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top center, rgba(255, 187, 0, 0.20), transparent 34%),
-        radial-gradient(circle at 20% 12%, rgba(255, 153, 0, 0.10), transparent 24%),
-        radial-gradient(circle at 80% 18%, rgba(255, 193, 77, 0.08), transparent 20%),
-        linear-gradient(180deg, #080808 0%, #0d0b08 42%, #080808 100%);
+        radial-gradient(circle at 12% 10%, rgba(255, 184, 0, 0.12), transparent 22%),
+        radial-gradient(circle at 88% 12%, rgba(255, 214, 105, 0.08), transparent 18%),
+        radial-gradient(circle at 50% -10%, rgba(255, 172, 24, 0.18), transparent 30%),
+        linear-gradient(180deg, #080809 0%, #0a0a0c 30%, #09090a 100%);
       min-height: 100vh;
-      line-height: 1.6;
+      line-height: 1.65;
+      overflow-x: hidden;
     }
 
-    body::before {
+    body::before,
+    body::after {
       content: "";
       position: fixed;
       inset: 0;
       pointer-events: none;
+      z-index: -2;
+    }
+
+    body::before {
       background:
-        linear-gradient(rgba(255, 204, 77, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 204, 77, 0.03) 1px, transparent 1px);
-      background-size: 38px 38px;
-      mask-image: radial-gradient(circle at center, black 44%, transparent 100%);
-      opacity: 0.45;
+        linear-gradient(rgba(255, 204, 77, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 204, 77, 0.035) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(circle at center, black 36%, transparent 100%);
+      opacity: 0.5;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
+    body::after {
+      background:
+        radial-gradient(circle at 50% 0%, rgba(255, 203, 77, 0.10), transparent 30%),
+        radial-gradient(circle at 30% 40%, rgba(255, 150, 0, 0.04), transparent 22%),
+        radial-gradient(circle at 70% 50%, rgba(255, 208, 107, 0.04), transparent 20%);
+      filter: blur(28px);
+      opacity: 0.9;
     }
 
-    img {
-      max-width: 100%;
-      display: block;
+    .particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
     }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 228, 163, 0.92), rgba(255, 179, 0, 0.28) 45%, transparent 70%);
+      opacity: 0.28;
+      filter: blur(0.4px);
+      animation: floatParticle linear infinite;
+    }
+
+    ::selection {
+      background: rgba(255, 203, 77, 0.3);
+      color: #fff9ed;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
 
     .container {
       width: min(var(--max), calc(100% - 32px));
@@ -77,268 +105,588 @@
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 50;
-      backdrop-filter: blur(12px);
-      background: rgba(8, 8, 8, 0.72);
-      border-bottom: 1px solid var(--line);
+      z-index: 100;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      background: linear-gradient(180deg, rgba(10, 10, 12, 0.88), rgba(10, 10, 12, 0.68));
+      backdrop-filter: blur(18px) saturate(140%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
     }
 
     .topbar-inner {
+      min-height: var(--header-h);
+      display: grid;
+      grid-template-columns: minmax(360px, 430px) 1fr;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .brand-row {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 14px 0;
+      justify-content: flex-start;
+      gap: 14px;
+      min-width: 0;
+      width: 100%;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
       min-width: 0;
+      max-width: 100%;
+      flex: 1 1 auto;
     }
 
     .brand-mark {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
+      position: relative;
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
       overflow: hidden;
-      background: #121212;
-      border: 1px solid rgba(255, 196, 64, 0.16);
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255, 203, 77, 0.18);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.08),
+        0 8px 24px rgba(0,0,0,0.3),
+        0 0 0 6px rgba(255, 203, 77, 0.04);
       flex: 0 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: -40% auto auto -30%;
+      width: 120%;
+      height: 60%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.18), transparent);
+      transform: rotate(-18deg);
+      pointer-events: none;
     }
 
     .brand-mark img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
+    }
+
+    .brand-copy {
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+
+    .topbar-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 0 0 auto;
+      margin-left: auto;
     }
 
     .brand-title {
-      font-size: 18px;
+      font-family: "Manrope", "Inter", sans-serif;
+      font-size: 19px;
       font-weight: 800;
-      letter-spacing: 0.02em;
+      letter-spacing: -0.03em;
+      line-height: 1;
     }
 
     .brand-sub {
+      margin-top: 4px;
       font-size: 12px;
       color: var(--muted);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      max-width: 120px;
     }
+
+    .lang-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+    }
+
+    .lang-switch a {
+      min-height: 34px;
+      padding: 0 14px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--muted);
+      transition: 0.2s ease;
+    }
+
+    .lang-switch a:hover {
+      color: var(--text);
+      background: rgba(255, 203, 77, 0.08);
+    }
+
+    .lang-switch a.is-current {
+      color: #171109;
+      background: linear-gradient(180deg, #ffe291, var(--gold-2));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.22);
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 48px;
+      height: 48px;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 203, 77, 0.14);
+      background: rgba(255, 203, 77, 0.08);
+      color: var(--text);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .menu-toggle:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 203, 77, 0.12);
+      border-color: rgba(255, 203, 77, 0.22);
+    }
+
+    .menu-toggle svg { width: 22px; height: 22px; }
 
     .nav {
       display: flex;
+      align-items: center;
+      gap: 8px;
       flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 10px;
+      justify-content: center;
+      min-width: 0;
     }
 
     .nav a {
-      font-size: 14px;
-      color: var(--muted);
-      padding: 8px 12px;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 14px;
       border-radius: 999px;
-      transition: 0.2s ease;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--muted);
+      border: 1px solid transparent;
+      transition: transform 0.2s ease, color 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
     }
 
     .nav a:hover {
       color: var(--text);
-      background: rgba(255, 196, 64, 0.10);
+      background: rgba(255, 203, 77, 0.08);
+      border-color: rgba(255, 203, 77, 0.12);
+      transform: translateY(-1px);
+    }
+
+    .nav a.active {
+      color: #fff6de;
+      background: rgba(255, 203, 77, 0.12);
+      border-color: rgba(255, 203, 77, 0.18);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    .nav a::after {
+      content: "";
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 8px;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform 0.25s ease;
+      opacity: 0.8;
+    }
+
+    .nav a:hover::after,
+    .nav a.active::after {
+      transform: scaleX(1);
     }
 
     .hero {
-      padding: 64px 0 38px;
+      position: relative;
+      padding: 56px 0 34px;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 28px;
-      align-items: center;
+      grid-template-columns: 1.02fr 0.98fr;
+      gap: 26px;
+      align-items: stretch;
+    }
+
+    .parallax-layer {
+      will-change: transform;
+      transform: translate3d(0, 0, 0);
     }
 
     .hero-card,
     .panel,
-    .cta {
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: var(--radius);
+    .cta,
+    .hero-visual,
+    .footer-card {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015)),
+        var(--surface);
+      border: 1px solid rgba(255, 203, 77, 0.12);
       box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
 
     .hero-card {
-      padding: 28px;
       position: relative;
+      border-radius: var(--radius-xl);
+      padding: 34px;
       overflow: hidden;
+      isolation: isolate;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 12% 16%, rgba(255, 217, 125, 0.10), transparent 28%),
+        radial-gradient(circle at 100% 100%, rgba(255, 160, 24, 0.14), transparent 28%);
+      pointer-events: none;
+      z-index: -1;
     }
 
     .hero-card::after {
       content: "";
       position: absolute;
-      inset: auto -90px -90px auto;
-      width: 260px;
-      height: 260px;
+      right: -80px;
+      bottom: -110px;
+      width: 300px;
+      height: 300px;
       border-radius: 50%;
       background: radial-gradient(circle, rgba(255, 187, 0, 0.18), transparent 70%);
+      filter: blur(10px);
       pointer-events: none;
+      z-index: -1;
     }
 
     .eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
+      gap: 10px;
+      min-height: 40px;
+      padding: 0 14px;
       border-radius: 999px;
       font-size: 13px;
-      font-weight: 700;
-      color: var(--gold-soft);
-      background: rgba(255, 196, 64, 0.10);
-      border: 1px solid rgba(255, 196, 64, 0.16);
-      margin-bottom: 18px;
+      font-weight: 800;
+      color: var(--gold-3);
+      background: rgba(255, 203, 77, 0.10);
+      border: 1px solid rgba(255, 203, 77, 0.16);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+      margin-bottom: 20px;
     }
 
-    h1 {
-      margin: 0 0 14px;
-      font-size: clamp(34px, 6vw, 64px);
-      line-height: 1.02;
+    .eyebrow-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #ffeaa2, #ffb300);
+      box-shadow: 0 0 16px rgba(255, 196, 64, 0.7);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    h1, h2, h3 {
       letter-spacing: -0.03em;
     }
 
-    .lead {
-      margin: 0 0 22px;
-      font-size: 18px;
-      color: var(--muted);
+    h1 {
+      margin: 0 0 16px;
+      font-family: "Manrope", "Inter", sans-serif;
+      font-size: clamp(38px, 6vw, 72px);
+      line-height: 0.98;
       max-width: 760px;
+      text-wrap: balance;
+    }
+
+    .hero-gradient {
+      background: linear-gradient(180deg, #fff8e5 0%, #ffd978 55%, #ffb300 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 26px rgba(255, 196, 64, 0.10);
+    }
+
+    .lead {
+      margin: 0 0 24px;
+      font-size: 18px;
+      color: #d5ccb6;
+      max-width: 760px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 0 0 18px;
+    }
+
+    .stat-chip {
+      display: grid;
+      gap: 2px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+    }
+
+    .stat-chip strong {
+      font-size: 20px;
+      line-height: 1;
+      color: #fff1c7;
+      letter-spacing: -0.03em;
+    }
+
+    .stat-chip span {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
     }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
     .btn {
+      position: relative;
+      overflow: hidden;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      min-height: 48px;
-      padding: 0 18px;
+      min-height: 52px;
+      padding: 0 20px;
       border-radius: 999px;
       font-weight: 800;
-      transition: 0.2s ease;
+      font-size: 15px;
+      transition: transform 0.2s ease, filter 0.2s ease, border-color 0.2s ease, background 0.2s ease;
       border: 1px solid transparent;
+      box-shadow: var(--shadow-soft);
+      will-change: transform;
     }
+
+    .btn svg { width: 18px; height: 18px; flex: 0 0 auto; }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -120%;
+      width: 70%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.16), transparent);
+      transform: skewX(-18deg);
+      transition: left 0.5s ease;
+      pointer-events: none;
+    }
+
+    .btn:hover::before { left: 135%; }
+    .btn:hover { transform: translateY(-2px); }
 
     .btn-primary {
-      color: #151109;
-      background: linear-gradient(180deg, var(--gold-soft), var(--gold-strong));
-      box-shadow: 0 10px 24px rgba(255, 174, 0, 0.24);
+      color: #181109;
+      background: linear-gradient(180deg, #ffe291 0%, var(--gold) 45%, var(--gold-2) 100%);
+      border-color: rgba(255, 203, 77, 0.18);
+      box-shadow: 0 16px 34px rgba(255, 174, 0, 0.25), inset 0 1px 0 rgba(255,255,255,0.28);
     }
 
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.04);
-    }
+    .btn-primary:hover { filter: brightness(1.04); }
 
     .btn-secondary {
       color: var(--text);
-      border-color: rgba(255, 196, 64, 0.18);
-      background: rgba(255, 196, 64, 0.08);
+      background: rgba(255, 203, 77, 0.08);
+      border-color: rgba(255, 203, 77, 0.16);
     }
 
     .btn-secondary:hover {
-      background: rgba(255, 196, 64, 0.12);
+      background: rgba(255, 203, 77, 0.12);
+      border-color: rgba(255, 203, 77, 0.24);
     }
 
-    .badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+    .hero-meta {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 10px;
     }
 
-    .badge {
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-size: 13px;
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+    .meta-card {
+      padding: 14px 14px 12px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+    }
+
+    .meta-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .meta-value {
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff3cf;
+      line-height: 1.25;
     }
 
     .hero-visual {
+      position: relative;
+      border-radius: var(--radius-xl);
       padding: 18px;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 203, 77, 0.10), transparent 24%),
+        radial-gradient(circle at 80% 80%, rgba(255, 160, 24, 0.14), transparent 28%);
+      pointer-events: none;
+      z-index: -1;
     }
 
     .hero-banner {
-      border-radius: 20px;
+      position: relative;
+      aspect-ratio: 16 / 10;
+      border-radius: 24px;
       overflow: hidden;
-      border: 1px solid rgba(255, 196, 64, 0.14);
-      background: #0d0d0d;
+      border: 1px solid rgba(255, 203, 77, 0.14);
+      background: #0b0b0c;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03), 0 12px 42px rgba(0,0,0,0.34);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
     }
 
     .hero-banner img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center;
+      transform: none;
+      border-radius: 0;
     }
 
     section {
-      padding: 18px 0;
+      position: relative;
+      padding: 20px 0;
+      scroll-margin-top: calc(var(--header-h) + 16px);
     }
 
-    .section-head {
-      margin-bottom: 18px;
-    }
+    .section-head { margin-bottom: 18px; }
 
     .section-label {
-      display: inline-block;
-      margin-bottom: 8px;
-      color: var(--gold-soft);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      color: var(--gold-3);
       font-weight: 800;
-      font-size: 13px;
-      letter-spacing: 0.08em;
+      font-size: 12px;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
     }
 
+    .section-label::before {
+      content: "";
+      width: 22px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+      opacity: 0.9;
+    }
+
     h2 {
-      margin: 0 0 8px;
-      font-size: clamp(26px, 4vw, 38px);
-      line-height: 1.12;
+      margin: 0 0 10px;
+      font-family: "Manrope", "Inter", sans-serif;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.08;
+      text-wrap: balance;
     }
 
     .section-desc {
       margin: 0;
+      max-width: 780px;
       color: var(--muted);
-      max-width: 760px;
+      font-size: 16px;
     }
 
-    .grid-2 {
+    .grid-2,
+    .grid-3,
+    .why-grid,
+    .watch-grid,
+    .faq-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
       gap: 18px;
     }
 
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3,
+    .why-grid,
+    .watch-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .faq-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
     .panel {
-      padding: 22px;
+      position: relative;
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      overflow: hidden;
+      transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.025), transparent 30%);
+      pointer-events: none;
+    }
+
+    .panel:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 203, 77, 0.20);
+      box-shadow: 0 22px 48px rgba(0,0,0,0.36);
     }
 
     .panel h3 {
       margin: 0 0 12px;
-      font-size: 20px;
+      font-size: 21px;
+      line-height: 1.15;
     }
 
     .panel p {
@@ -346,203 +694,702 @@
       color: var(--muted);
     }
 
+    .panel p + p { margin-top: 12px; }
+
     .list {
       margin: 0;
-      padding-left: 18px;
+      padding: 0;
+      list-style: none;
       color: var(--muted);
     }
 
-    .list li + li {
-      margin-top: 8px;
+    .list li {
+      position: relative;
+      padding-left: 20px;
     }
 
-    .feature-card {
-      height: 100%;
+    .list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.76em;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #ffeaa2, #ffb300);
+      box-shadow: 0 0 12px rgba(255, 196, 64, 0.45);
+      transform: translateY(-50%);
     }
+
+    .list li + li { margin-top: 10px; }
+    .feature-card, .watch-card, .why-card { height: 100%; }
 
     .feature-icon {
-      width: 44px;
-      height: 44px;
+      position: relative;
+      width: 54px;
+      height: 54px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border-radius: 14px;
-      margin-bottom: 14px;
-      font-size: 22px;
-      background: rgba(255, 196, 64, 0.10);
-      border: 1px solid rgba(255, 196, 64, 0.16);
+      border-radius: 18px;
+      margin-bottom: 16px;
+      font-size: 24px;
+      background: rgba(255, 203, 77, 0.10);
+      border: 1px solid rgba(255, 203, 77, 0.16);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    .feature-icon::after {
+      content: "";
+      position: absolute;
+      inset: auto -8px -8px auto;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 203, 77, 0.32), transparent 70%);
+      filter: blur(2px);
+      pointer-events: none;
+    }
+
+    .why-card::after,
+    .watch-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -20px -30px auto;
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 203, 77, 0.12), transparent 70%);
+      pointer-events: none;
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 16px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 10px;
+      bottom: 10px;
+      left: 19px;
+      width: 2px;
+      background: linear-gradient(180deg, rgba(255, 203, 77, 0.35), rgba(255, 203, 77, 0.04));
+      opacity: 0.9;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 54px;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #ffeaa2, #ffb300);
+      box-shadow: 0 0 16px rgba(255, 196, 64, 0.35);
+      border: 4px solid rgba(12, 12, 16, 0.95);
+      z-index: 1;
+    }
+
+    .timeline-card {
+      border-radius: 22px;
+      padding: 20px 20px 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01)), rgba(18, 18, 24, 0.86);
+      border: 1px solid rgba(255, 203, 77, 0.12);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .timeline-kicker {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: rgba(255, 203, 77, 0.09);
+      border: 1px solid rgba(255, 203, 77, 0.14);
+      color: #ffe8a5;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .faq-item {
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01)), rgba(18, 18, 24, 0.86);
+      border: 1px solid rgba(255, 203, 77, 0.12);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .faq-item summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 20px 22px;
+      font-weight: 800;
+      font-size: 17px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .faq-item summary::-webkit-details-marker { display: none; }
+
+    .faq-item summary::after {
+      content: "+";
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255, 203, 77, 0.10);
+      border: 1px solid rgba(255, 203, 77, 0.14);
+      color: #fff2c9;
+      font-size: 18px;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+
+    .faq-item[open] summary::after { content: "−"; }
+
+    .faq-answer {
+      padding: 0 22px 20px;
+      color: var(--muted);
+    }
+
+    .cta-meta {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+      text-align: left;
+    }
+
+    .cta-meta-card {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+    }
+
+    .cta-meta-card strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 15px;
+      color: #fff1c7;
+      letter-spacing: -0.02em;
+    }
+
+    .cta-meta-card span {
+      color: var(--muted);
+      font-size: 14px;
     }
 
     .cta {
-      margin-top: 10px;
-      padding: 30px;
+      position: relative;
+      margin-top: 8px;
+      padding: 34px;
+      border-radius: var(--radius-xl);
       text-align: center;
-      background:
-        radial-gradient(circle at top center, rgba(255, 187, 0, 0.18), transparent 45%),
-        rgba(20, 20, 20, 0.90);
+      overflow: hidden;
+      background: radial-gradient(circle at top center, rgba(255, 187, 0, 0.16), transparent 40%), linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)), rgba(18, 18, 24, 0.92);
     }
 
-    .cta h2 {
-      margin-bottom: 10px;
+    .cta::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(255, 203, 77, 0.06), transparent 18%), radial-gradient(circle at 80% 70%, rgba(255, 152, 0, 0.08), transparent 20%);
+      pointer-events: none;
     }
+
+    .cta h2 { margin-bottom: 12px; }
 
     .cta p {
       margin: 0 auto 18px;
-      max-width: 760px;
+      max-width: 800px;
       color: var(--muted);
     }
 
     .note {
-      margin-top: 12px;
+      margin-top: 14px;
       color: var(--muted);
       font-size: 14px;
     }
 
-    footer {
+    .divider-glow {
+      height: 1px;
+      margin: 14px 0 4px;
+      background: linear-gradient(90deg, transparent, rgba(255, 203, 77, 0.35), transparent);
+      opacity: 0.7;
+    }
+
+    .footer {
       padding: 34px 0 52px;
-      color: var(--muted);
-      font-size: 14px;
     }
 
     .footer-box {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .footer-card {
+      border-radius: 26px;
+      padding: 22px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .footer-brand .brand-mark {
+      width: 50px;
+      height: 50px;
+      border-radius: 15px;
+    }
+
+    .footer-title {
+      font-weight: 800;
+      font-size: 18px;
+    }
+
+    .footer-text {
+      color: var(--muted);
+      margin: 0;
+      max-width: 560px;
+    }
+
+    .footer-links {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      justify-content: space-between;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .footer-links a,
+    .footer-mini {
+      display: inline-flex;
       align-items: center;
-      padding-top: 18px;
-      border-top: 1px solid var(--line);
+      justify-content: center;
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.2s ease;
     }
 
-    @media (max-width: 980px) {
-      .hero-grid,
-      .grid-2,
-      .grid-3 {
-        grid-template-columns: 1fr;
-      }
-
-      .nav {
-        display: none;
-      }
-
-      .hero {
-        padding-top: 42px;
-      }
+    .footer-links a:hover,
+    .footer-mini:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 203, 77, 0.10);
+      border-color: rgba(255, 203, 77, 0.16);
     }
 
-    @media (max-width: 640px) {
-      .container {
-        width: min(var(--max), calc(100% - 20px));
-      }
+    .footer-side {
+      display: grid;
+      gap: 12px;
+    }
 
+    .footer-stat {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .footer-stat span:first-child {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-stat strong {
+      color: #fff1c7;
+      font-size: 15px;
+      text-align: right;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .to-top {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 90;
+      width: 48px;
+      height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: #181109;
+      background: linear-gradient(180deg, #ffe291, var(--gold-2));
+      border: 1px solid rgba(255, 203, 77, 0.18);
+      box-shadow: 0 14px 28px rgba(0,0,0,0.25);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .to-top.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .to-top svg { width: 20px; height: 20px; }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.95; }
+      50% { transform: scale(1.18); opacity: 1; }
+    }
+
+    @keyframes floatParticle {
+      0% { transform: translate3d(0, 0, 0) scale(1); opacity: 0; }
+      10% { opacity: 0.24; }
+      50% { opacity: 0.34; }
+      100% { transform: translate3d(40px, -120px, 0) scale(1.25); opacity: 0; }
+    }
+
+    @media (max-width: 1280px) {
       .topbar-inner {
-        padding: 12px 0;
+        grid-template-columns: minmax(320px, 380px) 1fr;
+        gap: 14px;
       }
 
-      .hero-card,
-      .panel,
-      .cta {
-        padding: 18px;
-      }
-
-      .lead {
-        font-size: 16px;
-      }
-
-      .brand-title {
-        font-size: 16px;
+      .nav a {
+        font-size: 13px;
+        padding: 0 12px;
       }
 
       .brand-sub {
-        font-size: 11px;
+        max-width: 130px;
       }
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid,
+      .grid-3,
+      .why-grid,
+      .watch-grid,
+      .footer-box {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .hero-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .cta-meta { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 920px) {
+      .topbar-inner {
+        min-height: auto;
+        padding: 14px 0;
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .brand-row {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .menu-toggle { display: inline-flex; }
+
+      .nav {
+        position: fixed;
+        top: 88px;
+        left: 10px;
+        right: 10px;
+        display: grid;
+        gap: 8px;
+        padding: 12px;
+        border-radius: 22px;
+        border: 1px solid rgba(255, 203, 77, 0.14);
+        background: rgba(10, 10, 12, 0.94);
+        backdrop-filter: blur(18px) saturate(140%);
+        -webkit-backdrop-filter: blur(18px) saturate(140%);
+        box-shadow: 0 18px 40px rgba(0,0,0,0.4);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px) scale(0.98);
+        transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+        overflow: visible;
+        width: auto;
+        justify-content: stretch;
+      }
+
+      .nav.open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0) scale(1);
+      }
+
+      .nav a {
+        width: 100%;
+        justify-content: flex-start;
+        min-height: 46px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .faq-grid,
+      .grid-2,
+      .cta-meta {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-banner {
+        aspect-ratio: 16 / 10;
+        padding: 8px;
+      }
+
+      .hero-banner img {
+        object-fit: contain;
+        border-radius: 18px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      :root { --header-h: 74px; }
+
+      .container { width: min(var(--max), calc(100% - 20px)); }
+      .hero { padding-top: 28px; }
+
+      .hero-card,
+      .hero-visual,
+      .panel,
+      .cta,
+      .footer-card {
+        padding: 18px;
+        border-radius: 22px;
+      }
+
+      h1 { font-size: clamp(34px, 11vw, 52px); }
+      .lead, .section-desc { font-size: 15px; }
+      .hero-banner { aspect-ratio: 4 / 3; padding: 8px; }
+      .brand-title { font-size: 17px; }
+      .brand-sub { font-size: 11px; }
+      .footer-links { gap: 8px; }
+
+      .hero-stats,
+      .hero-meta,
+      .lang-switch,
+      .footer-links a,
+      .footer-mini {
+        width: 100%;
+        grid-template-columns: 1fr;
+      }
+
+      .lang-switch {
+        justify-content: stretch;
+      }
+
+      .lang-switch a { flex: 1 1 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+      .reveal { opacity: 1; transform: none; }
     }
   </style>
 </head>
-<body>
+<body id="top">
+  <div class="particles" aria-hidden="true">
+    <span class="particle" style="width:4px;height:4px;left:6%;top:84%;animation-duration:16s;animation-delay:-2s;"></span>
+    <span class="particle" style="width:6px;height:6px;left:12%;top:72%;animation-duration:18s;animation-delay:-6s;"></span>
+    <span class="particle" style="width:3px;height:3px;left:18%;top:88%;animation-duration:14s;animation-delay:-3s;"></span>
+    <span class="particle" style="width:5px;height:5px;left:28%;top:78%;animation-duration:20s;animation-delay:-9s;"></span>
+    <span class="particle" style="width:4px;height:4px;left:38%;top:86%;animation-duration:17s;animation-delay:-12s;"></span>
+    <span class="particle" style="width:7px;height:7px;left:48%;top:82%;animation-duration:22s;animation-delay:-4s;"></span>
+    <span class="particle" style="width:3px;height:3px;left:58%;top:90%;animation-duration:15s;animation-delay:-8s;"></span>
+    <span class="particle" style="width:5px;height:5px;left:66%;top:76%;animation-duration:19s;animation-delay:-1s;"></span>
+    <span class="particle" style="width:4px;height:4px;left:76%;top:86%;animation-duration:16s;animation-delay:-10s;"></span>
+    <span class="particle" style="width:6px;height:6px;left:86%;top:80%;animation-duration:21s;animation-delay:-5s;"></span>
+    <span class="particle" style="width:4px;height:4px;left:92%;top:88%;animation-duration:18s;animation-delay:-11s;"></span>
+  </div>
+
   <header class="topbar">
     <div class="container topbar-inner">
-      <div class="brand">
-        <div class="brand-mark">
-          <img src="../logo-header.png" alt="SentinelAU Logo">
+      <div class="brand-row">
+        <div class="brand">
+          <div class="brand-mark">
+            <img src="logo-header.png" alt="SentinelAU logo">
+          </div>
+          <div class="brand-copy">
+            <div class="brand-title">SentinelAU</div>
+            <div class="brand-sub">Anti-cheat mod for Among Us</div>
+          </div>
         </div>
-        <div>
-          <div class="brand-title">SentinelAU</div>
-          <div class="brand-sub">Anti-cheat mod for Among Us</div>
+
+        <div class="topbar-controls">
+          <div class="lang-switch" aria-label="Language switcher">
+            <a href="../">RU</a>
+            <a href="./" class="is-current">EN</a>
+          </div>
+
+          <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="siteNav">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
         </div>
       </div>
 
-      <nav class="nav">
+      <nav class="nav" id="siteNav">
         <a href="#status">Status</a>
         <a href="#about">About</a>
+        <a href="#why">Why SentinelAU</a>
         <a href="#features">Features</a>
         <a href="#plans">Plans</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#faq">FAQ</a>
+        <a href="#repository">Repository</a>
+        <a href="#watch-now">Why now</a>
         <a href="#news">News</a>
       </nav>
     </div>
   </header>
 
   <main>
-    <section class="hero">
+    <section class="hero reveal">
       <div class="container hero-grid">
-        <div class="hero-card">
-          <div class="eyebrow">🔰 SentinelAU by Kawasaki</div>
-          <h1>Control. Protection. Stability.</h1>
+        <div class="hero-card parallax-layer" data-parallax="18">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            SentinelAU by Kawasaki
+          </div>
+
+          <h1>
+            <span class="hero-gradient">Control.</span><br>
+            <span class="hero-gradient">Protection.</span><br>
+            Stability.
+          </h1>
+
           <p class="lead">
-            <b>SentinelAU</b> is an anti-cheat mod for <b>Among Us</b>, developed to protect lobbies,
-            expand host capabilities, and provide a more convenient and stable gameplay experience.
+            <b>SentinelAU</b> is an anti-cheat mod for <b>Among Us</b>, designed to protect lobbies,
+            expand host tools, and create a more convenient and stable gameplay experience.
           </p>
+
+          <div class="hero-stats">
+            <div class="stat-chip">
+              <strong>Anti-Cheat</strong>
+              <span>Core Direction</span>
+            </div>
+            <div class="stat-chip">
+              <strong>Host Tools</strong>
+              <span>Management Focus</span>
+            </div>
+            <div class="stat-chip">
+              <strong>Custom UI</strong>
+              <span>Visual Identity</span>
+            </div>
+          </div>
 
           <div class="hero-actions">
             <a class="btn btn-primary" href="https://t.me/Sentinel_AU" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21.5 4.5 18.4 19c-.2 1-1 1.3-1.8.9l-4.5-3.3-2.2 2.1c-.2.2-.4.4-.8.4l.3-4.6 8.4-7.6c.4-.3-.1-.5-.6-.2L6.8 13 2.4 11.6c-1-.3-1-.9.2-1.3L20 3.6c.9-.3 1.8.2 1.5.9Z" fill="currentColor"/></svg>
               Project Telegram
             </a>
             <a class="btn btn-secondary" href="#features">
-              View Features
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h16M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              View features
             </a>
             <a class="btn btn-secondary" href="../">
-              Russian Version
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3c5 0 9 4 9 9s-4 9-9 9-9-4-9-9 4-9 9-9Zm0 0c2.4 2.5 3.8 5.7 4 9-.2 3.3-1.6 6.5-4 9-2.4-2.5-3.8-5.7-4-9 .2-3.3 1.6-6.5 4-9ZM4 9h16M4 15h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Russian version
             </a>
           </div>
 
-          <div class="badges">
-            <span class="badge">Anti-Cheat</span>
-            <span class="badge">Host Tools</span>
-            <span class="badge">Custom UI</span>
-            <span class="badge">Release: Summer–Autumn 2026</span>
+          <div class="hero-meta">
+            <div class="meta-card">
+              <div class="meta-label">Type</div>
+              <div class="meta-value">Host-only Anti-Cheat</div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-label">Focus</div>
+              <div class="meta-value">Lobby Protection</div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-label">Interface</div>
+              <div class="meta-value">Custom Interface</div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-label">Release</div>
+              <div class="meta-value">Summer–Autumn 2026</div>
+            </div>
           </div>
         </div>
 
-        <div class="hero-visual">
+        <div class="hero-visual parallax-layer" data-parallax="12">
           <div class="hero-banner">
-            <img src="../social-preview-en.png" alt="SentinelAU social preview">
+            <img src="social-preview.png" alt="SentinelAU preview" loading="eager">
           </div>
         </div>
       </div>
     </section>
 
-    <section id="status">
+    <section id="status" class="reveal">
       <div class="container">
         <div class="section-head">
           <div class="section-label">Status</div>
-          <h2>📌 Project Status</h2>
+          <h2>📌 Project status</h2>
           <p class="section-desc">
             SentinelAU is currently in active development and continues to expand as an anti-cheat mod
-            with additional functionality for hosts.
+            with additional host-focused functionality.
           </p>
         </div>
 
         <div class="grid-2">
           <article class="panel">
-            <h3>Current State</h3>
+            <h3>Current state</h3>
             <p><b>SentinelAU</b> is currently in active development.</p>
+            <div class="divider-glow"></div>
+            <p>The project is evolving as a full-scale lobby protection tool with a focus on control, convenience, and gameplay stability.</p>
           </article>
 
           <article class="panel">
-            <h3>Current Priorities</h3>
+            <h3>Current priorities</h3>
             <ul class="list">
               <li>expanding protection systems</li>
-              <li>developing host tools</li>
+              <li>improving host tools</li>
               <li>refining the interface</li>
               <li>preparing for the first public release</li>
             </ul>
@@ -551,20 +1398,20 @@
       </div>
     </section>
 
-    <section id="about">
+    <section id="about" class="reveal">
       <div class="container">
         <div class="section-head">
           <div class="section-label">About</div>
-          <h2>🛡️ About the Project</h2>
+          <h2>🛡️ About the project</h2>
           <p class="section-desc">
-            SentinelAU is being developed with a strong focus on lobby protection,
-            host convenience, and a more stable gameplay experience.
+            SentinelAU is being developed with a strong focus on lobby protection, host convenience,
+            and a more stable gameplay experience.
           </p>
         </div>
 
         <div class="grid-2">
           <article class="panel">
-            <h3>Main Focus</h3>
+            <h3>Main focus</h3>
             <ul class="list">
               <li>lobby control</li>
               <li>host convenience</li>
@@ -574,24 +1421,56 @@
           </article>
 
           <article class="panel">
-            <h3>Project Purpose</h3>
+            <h3>Project purpose</h3>
             <p>
-              SentinelAU is being built as an anti-cheat mod that combines lobby protection,
-              host management tools, and additional functionality designed to improve convenience
-              and overall control during gameplay.
+              SentinelAU is being created as an anti-cheat mod that combines lobby protection,
+              host management tools, and extra functionality that improves convenience and control during gameplay.
             </p>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="features">
+    <section id="why" class="reveal">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-label">Why SentinelAU</div>
+          <h2>✨ Why SentinelAU</h2>
+          <p class="section-desc">
+            The project is designed not as a random set of disconnected features, but as a cohesive system for hosts,
+            where protection, control, and convenience work together.
+          </p>
+        </div>
+
+        <div class="why-grid">
+          <article class="panel why-card">
+            <div class="feature-icon">🎯</div>
+            <h3>Host-first approach</h3>
+            <p>SentinelAU is built to give the host more control over the lobby instead of forcing them into constant manual cleanup every match.</p>
+          </article>
+
+          <article class="panel why-card">
+            <div class="feature-icon">🧱</div>
+            <h3>Protection as the foundation</h3>
+            <p>At the core of the project is lobby protection and gameplay resilience, while additional features are meant to support the mod rather than distract it from its main purpose.</p>
+          </article>
+
+          <article class="panel why-card">
+            <div class="feature-icon">🎛️</div>
+            <h3>Practical feature set</h3>
+            <p>The mod’s tools are selected with real use cases in mind: useful management, access to the right information, and fewer unnecessary actions in the game itself.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="reveal">
       <div class="container">
         <div class="section-head">
           <div class="section-label">Features</div>
-          <h2>⚙️ Current Features</h2>
+          <h2>⚙️ Current features</h2>
           <p class="section-desc">
-            At this stage, the project already includes core protection systems,
+            At the moment, the project already includes core protection mechanisms,
             host tools, and elements of its own custom interface.
           </p>
         </div>
@@ -602,26 +1481,26 @@
             <h3>Protection</h3>
             <ul class="list">
               <li>protection against current exploits</li>
-              <li>a protection system that drops cheater attacks outside the host, currently not yet fully implemented</li>
+              <li>implemented protection that drops attacks from cheaters outside the host, although it is not yet complete</li>
             </ul>
           </article>
 
           <article class="panel feature-card">
             <div class="feature-icon">⚙️</div>
-            <h3>Host Tools</h3>
+            <h3>Host tools</h3>
             <ul class="list">
-              <li>auto-host functionality through the mod menu</li>
-              <li>viewing and editing the banlist and whitelist through the mod menu</li>
-              <li>nickname-based banning</li>
+              <li>auto-host function through the mod menu</li>
+              <li>viewing and editing the ban list and whitelist through the mod menu</li>
+              <li>ability to ban by nickname</li>
             </ul>
           </article>
 
           <article class="panel feature-card">
             <div class="feature-icon">🎨</div>
-            <h3>Additional Functionality</h3>
+            <h3>Additional functionality</h3>
             <ul class="list">
-              <li>color locking by friend code through a file</li>
-              <li>a licensing system requiring an activation key after installation, otherwise the anti-cheat will not work</li>
+              <li>color binding by friend code through a file</li>
+              <li>implemented licensing system: after installing the mod, an activation key is required or the anti-cheat will not work</li>
               <li>custom design and visual style</li>
               <li>and much more</li>
             </ul>
@@ -630,79 +1509,196 @@
       </div>
     </section>
 
-    <section id="plans">
+    <section id="plans" class="reveal">
       <div class="container">
         <div class="section-head">
           <div class="section-label">Plans</div>
           <h2>🚀 Plans</h2>
           <p class="section-desc">
-            The project will continue to expand in terms of both protection systems
-            and additional host-oriented functionality.
+            The project will continue to grow both in terms of protection systems
+            and additional host-focused functionality.
           </p>
         </div>
 
         <div class="grid-2">
           <article class="panel">
-            <h3>Further Development</h3>
-            <p>
-              Further expansion and development of the mod’s functionality is planned.
-            </p>
+            <h3>Further development</h3>
+            <p>Plans include continued expansion and improvement of the mod’s functionality.</p>
           </article>
 
           <article class="panel">
-            <h3>Estimated Release Window</h3>
+            <h3>Estimated timeline</h3>
             <p><b>Estimated release window:</b> Summer–Autumn 2026.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="repository">
+    <section id="roadmap" class="reveal">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-label">Roadmap</div>
+          <h2>🗺️ Development stages</h2>
+          <p class="section-desc">
+            A simplified development timeline so the page looks not only attractive, but also clear and structured.
+          </p>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-card">
+              <div class="timeline-kicker">Stage 01</div>
+              <h3>Building the project foundation</h3>
+              <p>Basic mod structure, first protection mechanisms, core interface foundation, and the overall direction of SentinelAU.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-card">
+              <div class="timeline-kicker">Stage 02</div>
+              <h3>Expanding protection systems</h3>
+              <p>Strengthening the anti-cheat direction, improving lobby control mechanisms, and increasing stability in real gameplay scenarios.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-card">
+              <div class="timeline-kicker">Stage 03</div>
+              <h3>Host tools and convenience</h3>
+              <p>Developing practical management features, ban lists, whitelists, and other elements that give the host greater control.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-card">
+              <div class="timeline-kicker">Stage 04</div>
+              <h3>Preparing for public release</h3>
+              <p>Final polishing, visual refinements, feature clarification, and preparing the project for its first public release.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="reveal">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-label">FAQ</div>
+          <h2>❓ Frequently asked questions</h2>
+          <p class="section-desc">
+            The most basic things people usually ask first.
+          </p>
+        </div>
+
+        <div class="faq-grid">
+          <details class="faq-item">
+            <summary>What is SentinelAU?</summary>
+            <div class="faq-answer">SentinelAU is an anti-cheat mod for Among Us focused on lobby protection, host tools, and a more stable gameplay experience.</div>
+          </details>
+
+          <details class="faq-item">
+            <summary>Is the project publicly available yet?</summary>
+            <div class="faq-answer">The project is currently in active development. The public page is already available, while the actual release is planned for later.</div>
+          </details>
+
+          <details class="faq-item">
+            <summary>Where will news and releases be published?</summary>
+            <div class="faq-answer">The main platform for the project is the SentinelAU Telegram channel. That is where news, announcements, and development materials will be published.</div>
+          </details>
+
+          <details class="faq-item">
+            <summary>Will the source code be public?</summary>
+            <div class="faq-answer">No. The full project source code is not published and is not planned to be published. The repository is used as the project’s official public page.</div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="repository" class="reveal">
       <div class="container">
         <div class="section-head">
           <div class="section-label">Repository</div>
-          <h2>ℹ️ About This Repository</h2>
-          <p class="section-desc">
-            This page serves as the official public project page for SentinelAU.
-          </p>
+          <h2>ℹ️ About the repository</h2>
+          <p class="section-desc">This page is used as the official public project page for SentinelAU.</p>
         </div>
 
         <div class="grid-2">
           <article class="panel">
-            <h3>Repository Purpose</h3>
-            <p>
-              This GitHub repository is used as the official public page for the <b>SentinelAU</b> project.
-            </p>
-            <p style="margin-top: 12px;">
-              It contains general information about the mod, descriptions of its features,
-              visual materials, development status, and other public project-related information.
-            </p>
+            <h3>Purpose of the page</h3>
+            <p>This GitHub repository is used as the official public page of the <b>SentinelAU</b> project.</p>
+            <p>It contains general information about the mod, descriptions of its features, visual materials, development status, and other public project details.</p>
           </article>
 
           <article class="panel">
-            <h3>Source Code</h3>
-            <p>
-              The full source code of the project is not published and is not planned to be made public.
-            </p>
+            <h3>Source code</h3>
+            <p>The full source code of the project is not published and is not planned to be published.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="news">
+    <section id="watch-now" class="reveal">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-label">Why now</div>
+          <h2>👀 Why the project is worth following right now</h2>
+          <p class="section-desc">
+            Even before release, the project already has a clear concept, visual identity, and development direction.
+          </p>
+        </div>
+
+        <div class="watch-grid">
+          <article class="panel watch-card">
+            <div class="feature-icon">🧭</div>
+            <h3>Clear development direction</h3>
+            <p>The project is already built around a specific goal: lobby protection, host control, and convenient use without unnecessary clutter.</p>
+          </article>
+
+          <article class="panel watch-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Active development phase</h3>
+            <p>SentinelAU is not frozen. It is actively evolving, which means the project is gradually gaining new features and improvements.</p>
+          </article>
+
+          <article class="panel watch-card">
+            <div class="feature-icon">📢</div>
+            <h3>Early access to updates</h3>
+            <p>Following the channel lets people stay updated on changes, announcements, and the future release from the very beginning rather than hearing about it after the fact.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="news" class="reveal">
       <div class="container">
         <div class="cta">
-          <h2>📢 Project News</h2>
+          <h2>📢 Project news</h2>
           <p>
-            Telegram is the official platform for <b>SentinelAU</b>,
+            Telegram is the official platform of the <b>SentinelAU</b> project,
             where news, announcements, updates, and other materials related to the development of the mod are published.
           </p>
-          <p><b>The future release of SentinelAU will be published through the official Telegram channel.</b></p>
+          <p><b>The future SentinelAU release will be published specifically in the Telegram channel.</b></p>
 
           <div class="hero-actions" style="justify-content: center; margin-top: 18px; margin-bottom: 0;">
             <a class="btn btn-primary" href="https://t.me/Sentinel_AU" target="_blank" rel="noopener noreferrer">
-              Open Telegram
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21.5 4.5 18.4 19c-.2 1-1 1.3-1.8.9l-4.5-3.3-2.2 2.1c-.2.2-.4.4-.8.4l.3-4.6 8.4-7.6c.4-.3-.1-.5-.6-.2L6.8 13 2.4 11.6c-1-.3-1-.9.2-1.3L20 3.6c.9-.3 1.8.2 1.5.9Z" fill="currentColor"/></svg>
+              Go to Telegram
             </a>
+          </div>
+
+          <div class="cta-meta">
+            <div class="cta-meta-card">
+              <strong>News and announcements</strong>
+              <span>Official project posts about development status and important changes.</span>
+            </div>
+            <div class="cta-meta-card">
+              <strong>Future release</strong>
+              <span>The main information about the public release of SentinelAU will appear there.</span>
+            </div>
+            <div class="cta-meta-card">
+              <strong>Single official platform</strong>
+              <span>One official channel without unnecessary confusion, mirrors, or random sources.</span>
+            </div>
           </div>
 
           <div class="note">Official project channel: @Sentinel_AU</div>
@@ -710,7 +1706,7 @@
       </div>
     </section>
 
-    <section id="disclaimer">
+    <section id="disclaimer" class="reveal">
       <div class="container">
         <div class="section-head">
           <div class="section-label">Legal</div>
@@ -719,14 +1715,14 @@
 
         <article class="panel">
           <p>
-            This mod is not affiliated with Among Us or Innersloth LLC, and the content contained herein is not endorsed or otherwise sponsored by Innersloth LLC.
-            Portions of the materials contained herein are property of Innersloth LLC. © Innersloth LLC.
+            This mod is not affiliated with Among Us or Innersloth LLC and is not endorsed, supported, or sponsored by Innersloth LLC.
+            Some of the materials used belong to Innersloth LLC. © Innersloth LLC.
           </p>
         </article>
       </div>
     </section>
 
-    <section id="important">
+    <section id="important" class="reveal">
       <div class="container">
         <div class="section-head">
           <div class="section-label">Important</div>
@@ -735,7 +1731,7 @@
 
         <div class="grid-2">
           <article class="panel">
-            <h3>Fan-made Project</h3>
+            <h3>Fan-made project</h3>
             <ul class="list">
               <li>SentinelAU is a fan-made mod for Among Us</li>
               <li>It is not official, licensed, or endorsed by Innersloth LLC</li>
@@ -743,10 +1739,10 @@
           </article>
 
           <article class="panel">
-            <h3>Usage Notice</h3>
+            <h3>Usage notice</h3>
             <ul class="list">
               <li>A legitimate copy of Among Us is required</li>
-              <li>This repository and its releases do not include the base game files</li>
+              <li>This repository and its releases do not include the original game files</li>
             </ul>
           </article>
         </div>
@@ -754,11 +1750,172 @@
     </section>
   </main>
 
-  <footer>
+  <footer class="footer reveal">
     <div class="container footer-box">
-      <div>© 2026 SentinelAU by Kawasaki</div>
-      <div>GitHub Pages • Public project page</div>
+      <div class="footer-card">
+        <div class="footer-brand">
+          <div class="brand-mark">
+            <img src="logo-header.png" alt="SentinelAU logo">
+          </div>
+          <div>
+            <div class="footer-title">SentinelAU by Kawasaki</div>
+            <div class="brand-sub">GitHub Pages • Public project page</div>
+          </div>
+        </div>
+
+        <p class="footer-text">
+          The official public page of the SentinelAU project. It contains the main project information,
+          development status, plans, visual materials, and links to official project platforms.
+        </p>
+
+        <div class="footer-links">
+          <a href="https://t.me/Sentinel_AU" target="_blank" rel="noopener noreferrer">Telegram</a>
+          <a href="../">Russian version</a>
+          <a href="#roadmap">Roadmap</a>
+          <a href="#faq">FAQ</a>
+          <a href="#watch-now">Why now</a>
+          <a href="#top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;">Back to top</a>
+        </div>
+      </div>
+
+      <div class="footer-side">
+        <div class="footer-card footer-stat">
+          <span>Project</span>
+          <strong>Active development</strong>
+        </div>
+        <div class="footer-card footer-stat">
+          <span>Focus</span>
+          <strong>Lobby protection and host tools</strong>
+        </div>
+        <div class="footer-card footer-stat">
+          <span>Planned release</span>
+          <strong>Summer–Autumn 2026</strong>
+        </div>
+        <div class="footer-card footer-stat">
+          <span>© 2026</span>
+          <strong>SentinelAU by Kawasaki</strong>
+        </div>
+      </div>
     </div>
   </footer>
+
+  <a href="#top" class="to-top" id="toTop" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 19V5M12 5l-6 6M12 5l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+
+  <script>
+    const revealItems = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.14 });
+
+    revealItems.forEach((item) => io.observe(item));
+
+    const toTop = document.getElementById('toTop');
+    const toggleTopButton = () => {
+      if (window.scrollY > 540) {
+        toTop.classList.add('show');
+      } else {
+        toTop.classList.remove('show');
+      }
+    };
+
+    window.addEventListener('scroll', toggleTopButton, { passive: true });
+    toggleTopButton();
+
+    const menuToggle = document.getElementById('menuToggle');
+    const siteNav = document.getElementById('siteNav');
+    const navLinks = Array.from(document.querySelectorAll('.nav a[href^="#"]'));
+    const sectionTargets = navLinks
+      .map((link) => document.querySelector(link.getAttribute('href')))
+      .filter(Boolean);
+
+    const setActiveNav = () => {
+      let currentId = '';
+      const offset = window.scrollY + 140;
+
+      sectionTargets.forEach((section) => {
+        if (section.offsetTop <= offset) {
+          currentId = section.id;
+        }
+      });
+
+      navLinks.forEach((link) => {
+        const isActive = link.getAttribute('href') === `#${currentId}`;
+        link.classList.toggle('active', isActive);
+      });
+    };
+
+    window.addEventListener('scroll', setActiveNav, { passive: true });
+    window.addEventListener('load', setActiveNav);
+    setActiveNav();
+
+    if (menuToggle && siteNav) {
+      const closeMenu = () => {
+        siteNav.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      };
+
+      const openMenu = () => {
+        siteNav.classList.add('open');
+        menuToggle.setAttribute('aria-expanded', 'true');
+      };
+
+      menuToggle.addEventListener('click', () => {
+        if (siteNav.classList.contains('open')) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
+
+      siteNav.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', closeMenu);
+      });
+
+      document.addEventListener('click', (event) => {
+        const clickedInsideNav = siteNav.contains(event.target);
+        const clickedToggle = menuToggle.contains(event.target);
+
+        if (window.innerWidth <= 920 && siteNav.classList.contains('open') && !clickedInsideNav && !clickedToggle) {
+          closeMenu();
+        }
+      });
+
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 920) {
+          closeMenu();
+        }
+      });
+    }
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const parallaxItems = prefersReducedMotion ? [] : Array.from(document.querySelectorAll('[data-parallax]'));
+
+    if (parallaxItems.length) {
+      window.addEventListener('mousemove', (event) => {
+        const x = (event.clientX / window.innerWidth - 0.5) * 2;
+        const y = (event.clientY / window.innerHeight - 0.5) * 2;
+
+        parallaxItems.forEach((item) => {
+          const strength = Number(item.dataset.parallax || 10);
+          const tx = x * strength;
+          const ty = y * strength * 0.65;
+          item.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
+        });
+      }, { passive: true });
+
+      window.addEventListener('mouseleave', () => {
+        parallaxItems.forEach((item) => {
+          item.style.transform = 'translate3d(0,0,0)';
+        });
+      });
+    }
+  </script>
 </body>
 </html>
